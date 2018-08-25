@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>draw</groupId>
+    <groupId>drawer</groupId>
     <artifactId>console</artifactId>
     <version>1.0</version>
 
@@ -50,11 +50,13 @@
             <groupId>org.spockframework</groupId>
             <artifactId>spock-core</artifactId>
             <version>1.1-groovy-2.4</version>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.codehaus.groovy</groupId>
             <artifactId>groovy-all</artifactId>
             <version>${groovy.version}</version>
+            <scope>test</scope>
         </dependency>
 
     </dependencies>
@@ -96,7 +98,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
-                <version>2.3</version>
+                <version>3.1.1</version>
                 <executions>
                     <execution>
                         <phase>package</phase>
@@ -104,10 +106,11 @@
                             <goal>shade</goal>
                         </goals>
                         <configuration>
-                            <finalName>${project.artifactId}</finalName>
+                            <finalName>${project.groupId}-${project.artifactId}-${project.version}</finalName>
                             <transformers>
                                 <transformer
-                                        implementation="com.github.edwgiz.mavenShadePlugin.log4j2CacheTransformer.PluginsCacheFileTransformer">
+                                        implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                                    <mainClass>org.drawer.console.Main</mainClass>
                                 </transformer>
                             </transformers>
                         </configuration>

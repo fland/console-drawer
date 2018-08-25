@@ -26,6 +26,7 @@ class Application {
     }
 
     public void start() {
+        System.out.println("Provide command:");
         Scanner scanner = new Scanner(System.in);
         while (scanner.hasNextLine()) {
             String command = scanner.nextLine().trim();
@@ -35,6 +36,7 @@ class Application {
                     .findFirst();
 
             consoleCommand.ifPresentOrElse(i -> execute(i, command), this::showUsage);
+            System.out.println("Provide command:");
         }
     }
 
@@ -44,7 +46,7 @@ class Application {
     }
 
     private void showUsage() {
-        System.out.println("Usage:\n" +
+        System.out.println("No such command. Usage:\n" +
                 "Command \t\tDescription\n" +
                 "C w h           Create a new canvas of width w and height h.\n" +
                 "L x1 y1 x2 y2   Create a new line from (x1,y1) to (x2,y2). Currently only horizontal\n" +

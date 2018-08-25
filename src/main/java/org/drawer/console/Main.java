@@ -10,8 +10,8 @@ import lombok.extern.slf4j.Slf4j;
 public class Main {
 
     public static void main(String[] args) {
-        log.info("Hello from logs!");
-        System.out.println("Hello world!");
+        log.info("Drawer application started");
+        System.out.println("Drawer application started.");
         Application application = new Application();
         application.start();
     }
