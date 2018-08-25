@@ -9,14 +9,4 @@ import spock.lang.Specification
 
 class MainTest extends Specification {
 
-    def "first test"() {
-        given:
-        def i = 0
-
-        when:
-        Main.main()
-
-        then:
-        i == 0
-    }
 }

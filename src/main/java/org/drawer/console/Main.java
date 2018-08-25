@@ -6,7 +6,6 @@ import lombok.extern.slf4j.Slf4j;
  * @author Maksym Bondarenko
  * @version 1.0 25.08.18
  */
-
 @Slf4j
 public class Main {
 
@@ -15,7 +14,5 @@ public class Main {
         System.out.println("Hello world!");
         Application application = new Application();
         application.start();
-
-
     }
 }

@@ -1,6 +1,7 @@
 package org.drawer.console.commands
 
 import spock.lang.Specification
+import spock.lang.Unroll
 
 /**
  * @author Maksym Bondarenko
@@ -9,15 +10,42 @@ import spock.lang.Specification
 
 class CanvasConsoleCommandTest extends Specification {
 
-    def "should be applicable"() {
+    @Unroll
+    def "valid command '#command' should be applicable"() {
         given:
         def canvasCommand = new CanvasConsoleCommand()
-        def command = 'C 2 4'
 
         when:
         def applicable = canvasCommand.isApplicable(command)
 
         then:
         applicable
+
+        where:
+        command  | _
+        'C 2 4'  | _
+        'C 50 5' | _
+        'C 0 5'  | _
+    }
+
+    @Unroll
+    def "invalid command '#command' should not be applicable"() {
+        given:
+        def canvasCommand = new CanvasConsoleCommand()
+
+        when:
+        def applicable = canvasCommand.isApplicable(command)
+
+        then:
+        !applicable
+
+        where:
+        command   | _
+        'C  2 4'  | _
+        ' C 2 4'  | _
+        'C 2 4 '  | _
+        'C 5  5'  | _
+        ' C 5 a ' | _
+        'c 5 1'   | _
     }
 }

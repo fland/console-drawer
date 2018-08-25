@@ -11,7 +11,7 @@ import org.drawer.console.elements.ColouredElement;
 
 public class BucketFillCommand implements ConsoleCommand {
 
-    private static final String PATTERN = "^[B] [0-9]+ [0-9]+ [a-zA-Z0-9{1}&&[^1]]$";
+    private static final String PATTERN = "^[B] [0-9]+ [0-9]+ [a-zA-Z0-9{1}]$";
 
     @Override
     public boolean isApplicable(@NonNull String command) {

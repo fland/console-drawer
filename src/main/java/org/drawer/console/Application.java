@@ -13,7 +13,7 @@ import java.util.Scanner;
  * @version 1.0 25.08.18
  */
 @Slf4j
-public class Application {
+class Application {
 
     private final List<ConsoleCommand> commands;
 
@@ -46,16 +46,14 @@ public class Application {
     private void showUsage() {
         System.out.println("Usage:\n" +
                 "Command \t\tDescription\n" +
-                "C w h           Should create a new canvas of width w and height h.\n" +
-                "L x1 y1 x2 y2   Should create a new line from (x1,y1) to (x2,y2). Currently only\n" +
-                "                horizontal or vertical lines are supported. Horizontal and vertical lines\n" +
-                "                will be drawn using the 'x' character.\n" +
-                "R x1 y1 x2 y2   Should create a new rectangle, whose upper left corner is (x1,y1) and\n" +
-                "                lower right corner is (x2,y2). Horizontal and vertical lines will be drawn\n" +
+                "C w h           Create a new canvas of width w and height h.\n" +
+                "L x1 y1 x2 y2   Create a new line from (x1,y1) to (x2,y2). Currently only horizontal\n" +
+                "                or vertical lines are supported. Horizontal and vertical lines will be drawn\n" +
                 "                using the 'x' character.\n" +
-                "B x y c         Should fill the entire area connected to (x,y) with \"colour\" c. The\n" +
-                "                behaviour of this is the same as that of the \"bucket fill\" tool in paint\n" +
-                "                programs.\n" +
+                "R x1 y1 x2 y2   Create a new rectangle, whose upper left corner is (x1,y1) and lower right\n" +
+                "                corner is (x2,y2). Horizontal and vertical lines will be drawn using the 'x' character.\n" +
+                "B x y c         Fill the entire area connected to (x,y) with single symbol \"colour\" c (a-Z or 0-1).\n" +
+                "                The behaviour of this is the same as that of the \"bucket fill\" tool in paint programs.\n" +
                 "Q               Should quit the program.");
     }
 }
