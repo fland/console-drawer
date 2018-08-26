@@ -12,10 +12,12 @@ public class Canvas {
     private final Element[][] elements;
     private final int width;
     private final int height;
+    private final int borderSize;
 
-    public Canvas(int width, int height) {
+    public Canvas(int width, int height, int borderSize) {
         this.width = width;
         this.height = height;
+        this.borderSize = borderSize;
         elements = new Element[width][height];
         for (int x = 0; x < width; x++) {
             elements[x][0] = new CanvasHorizontalBorder();

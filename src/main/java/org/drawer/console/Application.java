@@ -24,7 +24,7 @@ final class Application {
     Application() {
         commands = List.of(new QuitConsoleCommand(), new CanvasConsoleCommand(), new LineConsoleCommand(),
                 new BucketFillCommand(), new RectangleConsoleCommand());
-        canvas = new Canvas(0, 0);
+        canvas = new Canvas(0, 0, 0);
     }
 
     void start() {

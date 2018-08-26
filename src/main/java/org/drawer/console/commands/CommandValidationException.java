@@ -7,7 +7,7 @@ package org.drawer.console.commands;
 
 public final class CommandValidationException extends RuntimeException {
 
-    public CommandValidationException(String message) {
+    CommandValidationException(String message) {
         super(message);
     }
 }

@@ -4,6 +4,8 @@ import lombok.NonNull;
 import org.drawer.console.elements.Canvas;
 import org.drawer.console.elements.ColouredElement;
 
+import static java.lang.String.format;
+
 /**
  * @author Maksym Bondarenko
  * @version 1.0 25.08.18
@@ -13,6 +15,13 @@ import org.drawer.console.elements.ColouredElement;
 public final class BucketFillCommand extends AbstractCommand {
 
     private static final String PATTERN = "^[B] [0-9]+ [0-9]+ [a-zA-Z0-9{1}]$";
+    private static final int X_PARAMETER_INDEX = 1;
+    private static final int Y_PARAMETER_INDEX = 2;
+    private static final int COLOUR_PARAMETER_INDEX = 3;
+
+    private int x = 0;
+
+    private int y = 0;
 
     @Override
     protected String getPattern() {
@@ -20,16 +29,27 @@ public final class BucketFillCommand extends AbstractCommand {
     }
 
     @Override
-    public Canvas execute(@NonNull Canvas canvas) {
-        var x = Integer.parseInt(parameters[1]);
-        var y = Integer.parseInt(parameters[2]);
-        var colour = parameters[3].charAt(0);
+    protected Canvas executeCommand(@NonNull Canvas canvas) {
+        var colour = parameters[COLOUR_PARAMETER_INDEX].charAt(0);
         return fillArea(x, y, colour, canvas);
     }
 
     @Override
-    public void validate(Canvas canvas) {
+    protected void validateCommand(Canvas canvas) {
+        var x = Integer.parseInt(parameters[X_PARAMETER_INDEX]);
+        var y = Integer.parseInt(parameters[Y_PARAMETER_INDEX]);
 
+        if (x < 1 || x > canvas.getWidth()) {
+            throw new CommandValidationException(format("x value [%d] should be greater than 0 " +
+                    "and less than canvas width [%d]", x, canvas.getWidth()));
+        }
+        if (y < 1 || y > canvas.getHeight()) {
+            throw new CommandValidationException(format("y value [%d] should be greater than 0 " +
+                    "and less than canvas height [%d]", y, canvas.getHeight()));
+        }
+
+        this.x = x;
+        this.y = y;
     }
 
     /**

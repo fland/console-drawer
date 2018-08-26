@@ -25,13 +25,13 @@ public final class CanvasConsoleCommand extends AbstractCommand {
     }
 
     @Override
-    public Canvas execute(@NonNull Canvas canvas) {
-        canvas = new Canvas(width, height);
+    protected Canvas executeCommand(@NonNull Canvas canvas) {
+        canvas = new Canvas(width, height, BORDER_ELEMENTS_SIZE);
         return canvas;
     }
 
     @Override
-    public void validate(@NonNull Canvas canvas) {
+    protected void validateCommand(@NonNull Canvas canvas) {
         var width = Integer.parseInt(parameters[WIDTH_PARAMETER_INDEX]);
         if (width < 1) {
             throw new CommandValidationException("Canvas width should be greater than 0");

@@ -14,7 +14,7 @@ class LineConsoleCommandTest extends Specification {
     @Unroll
     def "should throw CommandValidationException on coordinates [(#x1, #y1)(#x2, #y2)] out of canvas"() {
         given:
-        def canvas = new Canvas(width, height)
+        def canvas = new Canvas(width, height, 2)
         def lineCommand = new LineConsoleCommand()
 
         when:
@@ -29,15 +29,15 @@ class LineConsoleCommandTest extends Specification {
         x1 | x2 | y1 | y2 | width | height
         0  | 1  | 2  | 3  | 5     | 5
         1  | 0  | 2  | 3  | 5     | 5
-        6  | 1  | 2  | 3  | 5     | 5
-        1  | 6  | 2  | 3  | 5     | 5
-        1  | 1  | 6  | 3  | 5     | 5
-        1  | 1  | 2  | 6  | 5     | 5
+        6  | 1  | 2  | 3  | 5     | 7
+        1  | 6  | 2  | 3  | 5     | 7
+        1  | 1  | 6  | 3  | 7     | 5
+        1  | 1  | 2  | 6  | 7     | 5
     }
 
     def "should throw CommandValidationException on oblique line"() {
         given:
-        def canvas = new Canvas(5, 5)
+        def canvas = new Canvas(5, 5, 2)
         def lineCommand = new LineConsoleCommand()
 
         when:

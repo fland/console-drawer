@@ -35,7 +35,7 @@ public final class RectangleConsoleCommand extends AbstractCommand {
     }
 
     @Override
-    public Canvas execute(@NonNull Canvas canvas) {
+    protected Canvas executeCommand(@NonNull Canvas canvas) {
         for (int x = x1; x <= x2; x++) {
             canvas.getElements()[x][y1] = new LineElement();
             canvas.getElements()[x][y2] = new LineElement();
@@ -48,31 +48,43 @@ public final class RectangleConsoleCommand extends AbstractCommand {
     }
 
     @Override
-    public void validate(@NonNull Canvas canvas) {
+    protected void validateCommand(@NonNull Canvas canvas) {
+        var drawableCanvasWidth = canvas.getWidth() - canvas.getBorderSize();
+        var drawableCanvasHeight = canvas.getHeight() - canvas.getBorderSize();
         var x1 = Integer.parseInt(parameters[X1_PARAMETER_INDEX]);
-        if (x1 < 1 || x1 > canvas.getWidth()) {
+        if (x1 < 1 || x1 > drawableCanvasWidth) {
             throw new CommandValidationException(format("x1 value [%d] should be greater than 0 " +
-                    "and less than canvas width [%d]", x1, canvas.getWidth()));
+                    "and less or equal than canvas width [%d]", x1, drawableCanvasWidth));
         }
         var y1 = Integer.parseInt(parameters[Y1_PARAMETER_INDEX]);
-        if (y1 < 1 || y1 > canvas.getHeight()) {
+        if (y1 < 1 || y1 > drawableCanvasHeight) {
             throw new CommandValidationException(format("y1 value [%d] should be greater than 0 " +
-                    "and less than canvas height [%d]", y1, canvas.getHeight()));
+                    "and less or equal than canvas height [%d]", y1, drawableCanvasHeight));
         }
         var x2 = Integer.parseInt(parameters[X2_PARAMETER_INDEX]);
-        if (x2 < 1 || x2 > canvas.getWidth()) {
+        if (x2 < 1 || x2 > drawableCanvasWidth) {
             throw new CommandValidationException(format("x2 value [%d] should be greater than 0 " +
-                    "and less than canvas width [%d]", x2, canvas.getWidth()));
+                    "and less or equal than canvas width [%d]", x2, drawableCanvasWidth));
         }
         var y2 = Integer.parseInt(parameters[Y2_PARAMETER_INDEX]);
-        if (y2 < 1 || y2 > canvas.getWidth()) {
+        if (y2 < 1 || y2 > drawableCanvasHeight) {
             throw new CommandValidationException(format("y2 value [%d] should be greater than 0 " +
-                    "and less than canvas height [%d]", y2, canvas.getHeight()));
+                    "and less or equal than canvas height [%d]", y2, drawableCanvasHeight));
         }
 
-        this.x1 = x1;
-        this.x2 = x2;
-        this.y1 = y1;
-        this.y2 = y2;
+        if (x1 < x2) {
+            this.x1 = x1;
+            this.x2 = x2;
+        } else {
+            this.x1 = x2;
+            this.x2 = x1;
+        }
+        if (y1 < y2) {
+            this.y1 = y1;
+            this.y2 = y2;
+        } else {
+            this.y1 = y2;
+            this.y2 = y1;
+        }
     }
 }

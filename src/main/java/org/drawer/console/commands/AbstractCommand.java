@@ -12,6 +12,7 @@ import org.drawer.console.elements.Canvas;
 public abstract class AbstractCommand implements ConsoleCommand {
 
     String[] parameters = new String[0];
+    private boolean valid = false;
 
     protected abstract String getPattern();
 
@@ -21,12 +22,25 @@ public abstract class AbstractCommand implements ConsoleCommand {
             return false;
         }
         parameters = command.split(" ");
+        valid = false;
         return true;
     }
 
     @Override
-    public abstract Canvas execute(Canvas canvas);
+    public final Canvas execute(Canvas canvas) {
+        if (!valid) {
+            throw new CommandValidationException("Can't execute command. Validate parameters before executing command");
+        }
+        return executeCommand(canvas);
+    }
+
+    protected abstract Canvas executeCommand(Canvas canvas);
 
     @Override
-    public abstract void validate(Canvas canvas);
+    public final void validate(Canvas canvas) {
+        validateCommand(canvas);
+        valid = true;
+    }
+
+    protected abstract void validateCommand(Canvas canvas);
 }
