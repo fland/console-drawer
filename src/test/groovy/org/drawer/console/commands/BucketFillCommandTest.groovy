@@ -9,6 +9,7 @@ import spock.lang.Unroll
  * @version 1.0 25.08.18
  */
 
+//TODO: add unit tests for fill algorithm
 class BucketFillCommandTest extends Specification {
 
     @Unroll

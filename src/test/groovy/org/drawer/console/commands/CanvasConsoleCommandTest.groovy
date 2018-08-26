@@ -1,6 +1,9 @@
 package org.drawer.console.commands
 
 import org.drawer.console.elements.Canvas
+import org.drawer.console.elements.CanvasHorizontalBorder
+import org.drawer.console.elements.CanvasVerticalBorder
+import org.drawer.console.elements.EmptyElement
 import spock.lang.Specification
 import spock.lang.Unroll
 
@@ -10,6 +13,43 @@ import spock.lang.Unroll
  */
 
 class CanvasConsoleCommandTest extends Specification {
+
+    def "should create canvas"() {
+        given:
+        def canvasCommand = new CanvasConsoleCommand()
+        def borderSize = 2
+        def canvas = new Canvas(0, 0, borderSize)
+
+        when:
+        def applicable = canvasCommand.isApplicable("C $width $height")
+        canvasCommand.validate(canvas)
+        canvas = canvasCommand.execute(canvas)
+
+        then:
+        applicable
+        canvas.height == height + borderSize
+        canvas.width == width + borderSize
+        canvas.getBorderSize() == borderSize
+        for (x in 1..width - borderSize) {
+            for (y in 1..height - borderSize) {
+                canvas.elements[x][y] == new EmptyElement()
+            }
+        }
+        for (x in 0..width) {
+            canvas.elements[x][0] == new CanvasHorizontalBorder()
+            canvas.elements[x][height] == new CanvasHorizontalBorder()
+        }
+        for (y in 0..height) {
+            canvas.elements[0][y] == new CanvasVerticalBorder()
+            canvas.elements[width][y] == new CanvasVerticalBorder()
+        }
+
+        where:
+        width | height
+        1     | 1
+        5     | 5
+        5     | 10
+    }
 
     def "should through CommandValidationException on 0 dimension"() {
         given:

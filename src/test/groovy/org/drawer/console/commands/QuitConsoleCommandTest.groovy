@@ -1,5 +1,6 @@
 package org.drawer.console.commands
 
+
 import spock.lang.Specification
 import spock.lang.Unroll
 
@@ -9,6 +10,7 @@ import spock.lang.Unroll
  */
 
 class QuitConsoleCommandTest extends Specification {
+
     @Unroll
     def "valid command '#command' should be applicable"() {
         given:

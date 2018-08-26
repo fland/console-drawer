@@ -8,7 +8,7 @@ import spock.lang.Unroll
  * @author Maksym Bondarenko
  * @version 1.0 26.08.18
  */
-
+//TODO: add unit tests for drawn rectangle
 class RectangleConsoleCommandTest extends Specification {
 
     @Unroll
