@@ -7,26 +7,35 @@ import org.drawer.console.elements.ColouredElement;
 /**
  * @author Maksym Bondarenko
  * @version 1.0 25.08.18
+ * @see ConsoleCommand
  */
 
-public class BucketFillCommand implements ConsoleCommand {
+public final class BucketFillCommand extends AbstractCommand {
 
     private static final String PATTERN = "^[B] [0-9]+ [0-9]+ [a-zA-Z0-9{1}]$";
 
     @Override
-    public boolean isApplicable(@NonNull String command) {
-        return command.matches(PATTERN);
+    protected String getPattern() {
+        return PATTERN;
     }
 
     @Override
-    public Canvas execute(@NonNull String command, @NonNull Canvas canvas) {
-        var parameters = command.split(" ");
+    public Canvas execute(@NonNull Canvas canvas) {
         var x = Integer.parseInt(parameters[1]);
         var y = Integer.parseInt(parameters[2]);
         var colour = parameters[3].charAt(0);
         return fillArea(x, y, colour, canvas);
     }
 
+    @Override
+    public void validate(Canvas canvas) {
+
+    }
+
+    /**
+     * 'Stack' (simulated with array) based flood fill algorithm. Might require more memory due to 'stack' size
+     * {@code maxX*maxY*2}, but doesn't use recursion.
+     */
     private Canvas fillArea(int x, int y, char fill, Canvas canvas) {
         int maxX = canvas.getWidth() - 1;
         int maxY = canvas.getHeight() - 1;

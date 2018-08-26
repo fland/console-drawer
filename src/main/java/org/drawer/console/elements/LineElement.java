@@ -5,7 +5,7 @@ package org.drawer.console.elements;
  * @version 1.0 25.08.18
  */
 
-public class LineElement implements Element {
+public final class LineElement implements Element {
     @Override
     public char getRepresentation() {
         return 'x';

@@ -1,5 +1,6 @@
 package org.drawer.console.commands
 
+import org.drawer.console.elements.Canvas
 import spock.lang.Specification
 import spock.lang.Unroll
 
@@ -9,6 +10,24 @@ import spock.lang.Unroll
  */
 
 class CanvasConsoleCommandTest extends Specification {
+
+    def "should through CommandValidationException on 0 dimension"() {
+        given:
+        def canvasCommand = new CanvasConsoleCommand()
+
+        when:
+        def applicable = canvasCommand.isApplicable("C $width $height")
+        canvasCommand.validate(Mock(Canvas))
+
+        then:
+        applicable
+        thrown CommandValidationException
+
+        where:
+        width | height
+        1     | 0
+        0     | 2
+    }
 
     @Unroll
     def "valid command '#command' should be applicable"() {

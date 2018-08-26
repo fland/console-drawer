@@ -5,7 +5,7 @@ package org.drawer.console.elements;
  * @version 1.0 25.08.18
  */
 
-public class CanvasVerticalBorder implements Element {
+public final class CanvasVerticalBorder implements Element {
 
     @Override
     public char getRepresentation() {

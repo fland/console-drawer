@@ -13,19 +13,21 @@ import java.util.Scanner;
  * @version 1.0 25.08.18
  */
 @Slf4j
-class Application {
+final class Application {
+
+    private static final String VALIDATION_ERROR_MESSAGE = "Command validation exception during execution: ";
 
     private final List<ConsoleCommand> commands;
 
     private Canvas canvas;
 
-    public Application() {
+    Application() {
         commands = List.of(new QuitConsoleCommand(), new CanvasConsoleCommand(), new LineConsoleCommand(),
                 new BucketFillCommand(), new RectangleConsoleCommand());
         canvas = new Canvas(0, 0);
     }
 
-    public void start() {
+    void start() {
         System.out.println("Provide command:");
         Scanner scanner = new Scanner(System.in);
         while (scanner.hasNextLine()) {
@@ -35,14 +37,21 @@ class Application {
                     .filter(i -> i.isApplicable(command))
                     .findFirst();
 
-            consoleCommand.ifPresentOrElse(i -> execute(i, command), this::showUsage);
+            consoleCommand.ifPresentOrElse(this::execute, this::showUsage);
             System.out.println("Provide command:");
         }
     }
 
-    private void execute(ConsoleCommand consoleCommand, String command) {
-        canvas = consoleCommand.execute(command, canvas);
-        System.out.println(canvas.toString());
+    private void execute(ConsoleCommand consoleCommand) {
+        try {
+            consoleCommand.validate(canvas);
+            canvas = consoleCommand.execute(canvas);
+            System.out.println(canvas.toString());
+        } catch (CommandValidationException e) {
+            log.error(VALIDATION_ERROR_MESSAGE, e);
+            System.out.println(VALIDATION_ERROR_MESSAGE);
+            System.out.println(e.getMessage());
+        }
     }
 
     private void showUsage() {

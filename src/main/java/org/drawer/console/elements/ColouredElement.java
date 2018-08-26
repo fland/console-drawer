@@ -7,7 +7,7 @@ import lombok.RequiredArgsConstructor;
  * @version 1.0 25.08.18
  */
 @RequiredArgsConstructor
-public class ColouredElement implements Element {
+public final class ColouredElement implements Element {
 
     private final char symbol;
 

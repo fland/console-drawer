@@ -5,7 +5,7 @@ package org.drawer.console.elements;
  * @version 1.0 25.08.18
  */
 
-public class EmptyElement implements Element {
+public final class EmptyElement implements Element {
     @Override
     public char getRepresentation() {
         return ' ';

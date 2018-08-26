@@ -1,5 +1,6 @@
 package org.drawer.console.commands
 
+import org.drawer.console.elements.Canvas
 import spock.lang.Specification
 import spock.lang.Unroll
 
@@ -9,6 +10,31 @@ import spock.lang.Unroll
  */
 
 class RectangleConsoleCommandTest extends Specification {
+
+    @Unroll
+    def "should throw CommandValidationException on coordinates [(#x1, #y1)(#x2, #y2)] out of canvas"() {
+        given:
+        def canvas = new Canvas(width, height)
+        def rectangleCommand = new RectangleConsoleCommand()
+
+        when:
+        def applicable = rectangleCommand.isApplicable("R $x1 $y1 $x2 $y2")
+        rectangleCommand.validate(canvas)
+
+        then:
+        applicable
+        thrown CommandValidationException
+
+        where:
+        x1 | x2 | y1 | y2 | width | height
+        0  | 1  | 2  | 3  | 5     | 5
+        1  | 0  | 2  | 3  | 5     | 5
+        6  | 1  | 2  | 3  | 5     | 5
+        1  | 6  | 2  | 3  | 5     | 5
+        1  | 1  | 6  | 3  | 5     | 5
+        1  | 1  | 2  | 6  | 5     | 5
+    }
+
     @Unroll
     def "valid command '#command' should be applicable"() {
         given:
