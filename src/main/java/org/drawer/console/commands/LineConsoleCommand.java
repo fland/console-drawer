@@ -12,7 +12,7 @@ import static java.lang.String.format;
  * @see ConsoleCommand
  */
 
-public final class LineConsoleCommand extends AbstractCommand {
+public final class LineConsoleCommand extends RectangleConsoleCommand {
 
     private static final String PATTERN = "^[L] [0-9]+ [0-9]+ [0-9]+ [0-9]+$";
     private static final int X1_PARAMETER_INDEX = 1;
@@ -45,28 +45,11 @@ public final class LineConsoleCommand extends AbstractCommand {
 
     @Override
     protected void validateCommand(@NonNull Canvas canvas) {
-        var drawableCanvasWidth = canvas.getWidth() - canvas.getBorderSize();
-        var drawableCanvasHeight = canvas.getHeight() - canvas.getBorderSize();
+        super.validateCommand(canvas);
         var x1 = Integer.parseInt(parameters[X1_PARAMETER_INDEX]);
-        if (x1 < 1 || x1 > drawableCanvasWidth) {
-            throw new CommandValidationException(format("x1 value [%d] should be greater than 0 " +
-                    "and less or equal than canvas width [%d]", x1, drawableCanvasWidth));
-        }
         var y1 = Integer.parseInt(parameters[Y1_PARAMETER_INDEX]);
-        if (y1 < 1 || y1 > drawableCanvasHeight) {
-            throw new CommandValidationException(format("y1 value [%d] should be greater than 0 " +
-                    "and less or equal than canvas height [%d]", y1, drawableCanvasHeight));
-        }
         var x2 = Integer.parseInt(parameters[X2_PARAMETER_INDEX]);
-        if (x2 < 1 || x2 > drawableCanvasWidth) {
-            throw new CommandValidationException(format("x2 value [%d] should be greater than 0 " +
-                    "and less or equal than canvas width [%d]", x2, drawableCanvasWidth));
-        }
         var y2 = Integer.parseInt(parameters[Y2_PARAMETER_INDEX]);
-        if (y2 < 1 || y2 > drawableCanvasHeight) {
-            throw new CommandValidationException(format("y2 value [%d] should be greater than 0 " +
-                    "and less or equal than canvas height [%d]", y2, drawableCanvasHeight));
-        }
         if (!(x1 == x2) && !(y1 == y2)) {
             throw new CommandValidationException(format("Line should be either horizontal (y1 == y2) " +
                     "or vertical (x1 == x2). Provided values: (%d, %d) (%d, %d)", x1, y1, x2, y2));

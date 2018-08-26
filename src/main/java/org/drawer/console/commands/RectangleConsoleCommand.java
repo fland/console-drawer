@@ -12,7 +12,7 @@ import static java.lang.String.format;
  * @see ConsoleCommand
  */
 
-public final class RectangleConsoleCommand extends AbstractCommand {
+public class RectangleConsoleCommand extends AbstractCommand {
 
     private static final String PATTERN = "^[R] [0-9]+ [0-9]+ [0-9]+ [0-9]+$";
 
